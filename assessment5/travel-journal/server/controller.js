@@ -235,7 +235,14 @@ module.exports = {
     },
     getCountries: (req, res) => {
         sequelize.query(` SELECT * FROM countries_id
-
+     `).then(dbRes => res.status(200).send(dbRes[0]))
+    },
+    createCity: (req, res) => {
+        sequelize.query(` INSERT INTO (name, rating, countryId)
+        VALUES ('Orem', '3', 'United States of America')
         `).then(dbRes => res.status(200).send(dbRes[0]))
-    }
+    },
+    getCities: (req,res) => {
+        sequelize.query(`SELECT countries_id As Countries
+   `) },
 }
