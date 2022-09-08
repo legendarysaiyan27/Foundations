@@ -18,7 +18,7 @@ function handleSubmit(e) {
         countryId: +countrySelect.value
     }
 
-    axios.post('http://localhost:4004/cities', body)
+    axios.post('/cities', body)
         .then(() => {
             countrySelect.value = 1
             nameInput.value = ''
@@ -28,7 +28,7 @@ function handleSubmit(e) {
 }
 
 function deleteCard(id) {
-    axios.delete(`http://localhost:4004/cities/${id}`)
+    axios.delete(`/cities/${id}`)
         .then(() => getCities())
         .catch(err => console.log(err))
 }
@@ -36,7 +36,7 @@ function deleteCard(id) {
 function getCities() {
     countryList.innerHTML = ''
 
-    axios.get('http://localhost:4004/cities/')
+    axios.get('/cities')
         .then(res => {
             res.data.forEach(elem => {
                 let countryCard = `<div class="country-card">
@@ -52,7 +52,7 @@ function getCities() {
 }
 
 function getCountries() {
-    axios.get('http://localhost:4004/countries')
+    axios.get('/countries')
         .then(res => {
             res.data.forEach(country => {
                 const option = document.createElement('option')
