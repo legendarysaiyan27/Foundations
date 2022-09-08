@@ -242,7 +242,12 @@ module.exports = {
         VALUES ('Orem', '3', 'United States of America')
         `).then(dbRes => res.status(200).send(dbRes[0]))
     },
+    //WORKING ON
     getCities: (req,res) => {
         sequelize.query(`SELECT countries_id As Countries
    `) },
+   //WORKING ON
+   deleteCity: (req, res) => {
+    sequelize.query
+   }
 }
