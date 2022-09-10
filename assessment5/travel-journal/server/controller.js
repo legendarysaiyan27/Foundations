@@ -1,7 +1,6 @@
 require('dotenv').config()
 const {CONNECTION_STRING} = process.env
-const {Sequelize} = require('sequelize')
-console.log(process.env)
+const Sequelize = require('sequelize')
 
 const sequelize = new Sequelize(CONNECTION_STRING,{
 
@@ -16,7 +15,8 @@ const sequelize = new Sequelize(CONNECTION_STRING,{
 
 module.exports = {
     seed: (req, res) => {
-        sequelize.query(`
+        sequelize.query(
+            `
             drop table if exists cities;
             drop table if exists countries;
 
@@ -27,9 +27,9 @@ module.exports = {
 
             create table cities (
                 city_id serial primary key,
-                name varchar,
+                name varchar(40),
                 rating interger,
-                country_id interger
+                country_id interger references countries(country_id),
             );
 
             insert into countries (name)
@@ -234,8 +234,9 @@ module.exports = {
         }).catch(err => console.log('error seeding DB', err))
     },
     getCountries: (req, res) => {
-        sequelize.query(` SELECT * FROM countries
-     `).then(dbRes => res.status(200).send(dbRes[0]))
+        sequelize.query(` SELECT * FROM countries`) 
+        .then(dbRes => res.status(200).send(dbRes[0]))
+        .catch((err) => console.log(err));
     },
     createCity: (req, res) => {
         const {name, rating, countryId} = req.body
@@ -245,11 +246,15 @@ module.exports = {
     },
    
     getCities: (req,res) => {
-        sequelize.query(`SELECT * FROM cities
-   `).then(dbRes => res.status(200).send(dbRes[0]))},
+        sequelize.query(`SELECT city_id, cities.name AS city, rating, countries.country_id, countries.name AS country FROM countries INNER JOIN cities ON cities.country_id = countries.country_id ORDER BY rating DESC;  
+        `)
+        .then(dbRes => res.status(200).send(dbRes[0]))
+    },
    
-//    //WORKING ON
-//    deleteCity: (req, res) => {
-//     sequelize.query
-//    }
-}
+    deleteCity: (req, res) => {
+        const {id} = req.params
+     sequelize.query(` DELETE FROM cities WHERE city_id = ${id}`)
+     .then(dbRes => res.status(200).send(dbRes[0]))
+    
+   },
+};
