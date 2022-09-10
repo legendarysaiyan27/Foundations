@@ -247,6 +247,7 @@ module.exports = {
     getCities: (req,res) => {
         sequelize.query(`SELECT * FROM cities
    `).then(dbRes => res.status(200).send(dbRes[0]))},
+   
 //    //WORKING ON
 //    deleteCity: (req, res) => {
 //     sequelize.query
