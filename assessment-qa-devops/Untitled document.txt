@@ -1,0 +1,7 @@
+﻿Testing plan: 1. Pick two robots with the best stats  to purposely WIN a duel.
+                2. Pick two robots with the worst stats to purposely LOSE a duel.
+                3. Click on all the buttons and features to see how each button reacts.
+
+
+Bugs: 1. A bug where even when the player wins a duel, the win is recorded as a “lost”.
+2.The “See All Bots” feature doesn’t function when clicked on.
